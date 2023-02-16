@@ -1,78 +1,51 @@
 import math
 
+def calculate_delta(a, b, c):
+    return b**2 - 4*a*c
 
-def delta_func(a, b, c):
-    a = a
-    b = b
-    c = c
-    delta = ((b**2) - (4*a*c))
-    return delta
-
-def raiz_func(delta):
-    raiz = math.sqrt(delta)
-    return raiz
-
-def raizes_func(raiz):
-    raiz = raiz
-
-    if raiz < 0:
+def calculate_roots(a, b, c):
+    delta = calculate_delta(a, b, c)
+    if delta < 0:
         print("A equação não possui raizes reais")
-    elif raiz == 0:
+        return None
+    elif delta == 0:
         print("A equação possui apenas um resultado real ou possui dois resultados iguais")
-    elif raiz > 0:
-        print("A equação possui duas raizes reais")
-        
-    return ' '
-
-def x_func(delta, a, b):
-    delta = delta
-    a = a
-    b = b
-    x1 = (-(b) + delta)/(2*a)
-    x2 = (-(b) - delta)/(2*a)
-    return x1, x2
-
-def concavidade_func(a):
-    a = a
-    if a < 0:
-        print("A concavidade da figura sára voltada para baixo")
+        x = -b / (2*a)
+        return x
     else:
-        print("A concavidade da figura sára voltada para cima")
-        
-    return ' '
+        print("A equação possui duas raizes reais")
+        x1 = (-b + math.sqrt(delta)) / (2*a)
+        x2 = (-b - math.sqrt(delta)) / (2*a)
+        return x1, x2
 
-def vertices_func(a, b, delta):
-    a = a
-    b = b
-    delta = delta
-    vx = ((- b) / (2 * a))
-    xy = (-(delta) / (4 * a))
-    return vx, xy
+def determine_concavity(a):
+    if a < 0:
+        print("A concavidade da figura será voltada para baixo")
+    else:
+        print("A concavidade da figura será voltada para cima")
 
-def a_func():
-    a = int(input("Digite o ax²: "))
-    return a
+def calculate_vertex(a, b):
+    vx = -b / (2*a)
+    vy = calculate_delta(a, b, 0) / (4*a)
+    return vx, vy
 
-def b_func():
-    b = int(input("Digite o bx: "))
-    return b
+def get_coefficients():
+    a = int(input("Digite o coeficiente a: "))
+    b = int(input("Digite o coeficiente b: "))
+    c = int(input("Digite o coeficiente c: "))
+    return a, b, c
 
-def c_func():
-    c = int(input("Digite o x: "))
-    return c
+def main():
+    a, b, c = get_coefficients()
 
-a = a_func()
-b = b_func()
-c = c_func()
+    roots = calculate_roots(a, b, c)
+    if roots is not None:
+        print(f"As raízes são: {roots}")
 
-delta = delta_func(a, b, c)
-#print('O delta é ', delta)
-raiz = raiz_func(delta)
-#print('A raiz quadrada é ', raiz)
-#raizes = raizes_func(delta)
-#print(raizes)
-x = x_func(delta, a, b)
-#print(x)
-#concavidade = concavidade_func(a)
-vertices = vertices_func(a, b, delta)
-#print("As vertices são ", vertices)
+    determine_concavity(a)
+
+    vertex = calculate_vertex(a, b)
+    print(f"O vértice é: {vertex}")
+
+if __name__ == '__main__':
+    main()
